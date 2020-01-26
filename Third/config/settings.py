@@ -120,6 +120,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 SHORT_DATE_FORMAT = 'j.m.Y'
 
 SHORT_DATETIME_FORMAT = 'j.m.Y H:i'

@@ -5,13 +5,12 @@
 	<title>Title</title>
 </head>
 <body>
-	<h1>
-		{% for category in categories %}
-			<p><a href="{% url 'category' category.slug %}">{{category.name}}</a></p>
-		{% endfor %}
-		{% for post in posts %}
-			<p>{{post.title}}<br>{{post.text}}<br><p></p>></p>
-		{% endfor %}
-	</h1>
+	{% for category in categories %}
+		<p><a href="{% url 'category' category.slug %}">{{category.name}}</a></p>
+	{% endfor %}
+	{% for post in posts %}
+		<p>{{post.title}}<br>{{post.text}}<br>{{post.created}}<p></p>></p>
+	{% endfor %}
+
 </body>
 </html>
