@@ -10,7 +10,20 @@
 	{% endfor %}
 	<hr>
 	<h2>{{ post.title }}</h2>
+	<small>{{ post.subtitle }}</small>
 	<p>{{ post.mini_text }}</p>
-	<small>{{ post.published_date }}</small>
+	Теги - {% for tag in post.get_tags %}
+		{{ tag.name }}
+	{% endfor %}
+	<br>
+	<small>Автор: {{ post.author }} - {{ post.published_date }}</small>
+	<small>Просмотров: {{ post.viewed }}</small>
+	<hr>
+	<h4>Комментарии</h4>
+	{% for comment in post.comment_set.all %}
+		Пользователь - {{ comment.author }}<br>
+		{{ comment.text }} <br>
+		Добавлен - {{ comment.published }} <br><br>
+	{% endfor %}
 </body>
 </html>

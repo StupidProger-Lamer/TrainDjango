@@ -51,7 +51,7 @@ class Post(models.Model):
 	subtitle = models.CharField('Подзаголовок', max_length=500, blank=True, null=True)
 	created = models.DateTimeField('Дата публикации', auto_now_add=True)
 	slug = models.SlugField('url', max_length=100, unique=True)
-	tags = models.ManyToManyField(Tag, verbose_name='Тег', blank=True)
+	tags = models.ManyToManyField(Tag, verbose_name='Тег', blank=True, related_name='tag')
 	category = models.ForeignKey(
 		Category, 
 		verbose_name='Категория',
@@ -84,11 +84,17 @@ class Post(models.Model):
 	status = models.BooleanField('Для зарегистрированных', default=False)
 	sort = models.PositiveIntegerField('Порядок', default=0)
 
+	def get_tags(self):
+		return self.tags.all()
+
 	def __str__(self):
 		return self.title
 
 	def get_absolute_url(self):
 		return reverse('detail_post', kwargs={'category': self.category.slug, 'slug': self.slug})
+
+	def get_comments_count(self):
+		return self.comments.count()
 
 	class Meta:
 		verbose_name = 'Пост'
@@ -99,7 +105,7 @@ class Comment(models.Model):
 	text = models.TextField('Текст')
 	published = models.DateTimeField('Дата публикации')
 	moderation = models.BooleanField()
-	post = models.ForeignKey(Post, verbose_name='Статья', on_delete=models.CASCADE)
+	post = models.ForeignKey(Post, related_name='comments', verbose_name='Статья', on_delete=models.CASCADE)
 	author = models.ForeignKey(
 		User, 
 		verbose_name='Автор',

@@ -19,6 +19,7 @@ class PostDetailView(View):
 	def get(self, request, category, slug):
 		category_list = Category.objects.all()
 		post = Post.objects.get(slug=slug)
+		tags = post.get_tags()
 		return render(request, 'blog/post_detail.html', {'categories': category_list, 'post': post})
 
 class CategoryView(View):
